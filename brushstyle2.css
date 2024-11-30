@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #0f2867;
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  canvas {
+    border: 2px solid steelblue;
+    background: #fff;
+  }

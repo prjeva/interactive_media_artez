@@ -1,7 +1,5 @@
 let p5Canvas;
 let brushSize = 50; // Default brush size
-let brushWidth = 50;
-let brushHeight = 50;
 let brushShape = "circle"; // Default brush shape (circle, square, or rectangle)
 let isEraserActive = false; // Toggle state for eraser
 
@@ -25,7 +23,7 @@ function setup() {
   const canvasWrapper = document.querySelector(".brush-preview-wrapper");
   canvasWrapper.style.aspectRatio = `${canvasHeight} / ${canvasHeight}`;
 
-  updateBrush(); // Initialize the brush
+  updateBrush(); // Initialize the brush preview
 }
 
 // Adjust the canvas size when the window resizes
@@ -44,11 +42,11 @@ document.querySelector(".eraser-button").addEventListener("click", () => {
 
   // Update button appearance based on state
   if (isEraserActive) {
-    eraserButton.style.backgroundColor = "#f44336"; // Reset to red
-    eraserButton.textContent = "Eraser"; // Reset text
-  } else {
     eraserButton.style.backgroundColor = "#ffa500"; // Highlight eraser button (orange)
     eraserButton.textContent = "Brush"; // Change text to indicate switching back to brush
+  } else {
+    eraserButton.style.backgroundColor = "#f44336"; // Reset to red
+    eraserButton.textContent = "Eraser"; // Reset text
   }
 });
 
@@ -58,15 +56,37 @@ document.querySelector(".brush-shape").addEventListener("change", (event) => {
 });
 
 function draw() {
-  noStroke();
   if (mouseIsPressed) {
-      if (isEraserActive) {
-        fill(255);
-      } else {
-        fill(0);
+    if (isEraserActive) {
+      erase(); // Enable eraser
+      ellipse(mouseX, mouseY, brushSize, brushSize);
+      noErase();
+    } else {
+      noStroke();
+      fill(0);
+
+      if (brushShape === "circle") {
+        ellipse(mouseX, mouseY, brushSize, brushSize); // Draw a circle
+      } else if (brushShape === "square") {
+        rectMode(CENTER);
+        rect(mouseX, mouseY, brushSize, brushSize); // Draw a square
+      } else if (brushShape === "rectangle") {
+        rectMode(CENTER);
+        rect(mouseX, mouseY, brushSize * 1.5, brushSize); // Draw a rectangle (2:1 aspect ratio)
       }
-      ellipse(mouseX, mouseY, brushWidth, brushHeight); // Draw a circle
+    }
+    updateBrushPreview(); // Update brush preview in real-time
   }
+}
+
+function updateBrushPreview() {
+  const brushPreview = document.querySelector(".brush-shape-preview");
+  const img = createImage(width, height);
+  img.copy(p5Canvas, 0, 0, width, height, 0, 0, width, height);
+
+  // Update the preview with the canvas content
+  const dataUrl = img.canvas.toDataURL();
+  brushPreview.style.backgroundImage = `url(${dataUrl})`;
 }
 
 function saveFunction() {
@@ -85,16 +105,10 @@ function saveFunction() {
 }
 
 // Update the brush size dynamically based on input
-function updateBrush(r=0,g=0,b=0) {
-  const size = document.getElementById('size').value; 
-  //brushCircle updates the preview
-  const brushCircle = document.querySelector('.brush-circle');
-  brushCircle.style.width = `${Math.min(25 + (size / 2), 80)}px`;
-  brushCircle.style.height = `${Math.min(25 + (size / 2), 80)}px`; 
-  brushCircle.style.borderRadius = `100%`;
-  brushCircle.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 100)`;
-
-  //the actual brush can be updated by updating the global variables defined at the begin
-  brushWidth = Math.min(25 + (size / 2), 80);
-  brushHeight = Math.min(25 + (size / 2), 80);
+function updateBrush() {
+  const sizeInput = document.querySelector("#size");
+  if (sizeInput) {
+    brushSize = parseInt(sizeInput.value, 10);
+    updateBrushPreview();
+  }
 }
