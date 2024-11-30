@@ -52,12 +52,18 @@ document.querySelector(".eraser-button").addEventListener("click", () => {
   }
 });
 
+document.querySelector(".reset-button").addEventListener("click", () => {
+  //https://p5js.org/reference/p5/clear/
+  const resetButton = document.querySelector(".reset-button");
+  clear();
+});
 // Handle shape changes
 document.querySelector(".brush-shape").addEventListener("change", (event) => {
   brushShape = event.target.value; // Update brush shape
 });
 
 function draw() {
+  brushShape = document.getElementById("brushShape").value;
   noStroke();
   if (mouseIsPressed) {
       if (isEraserActive) {
@@ -65,7 +71,14 @@ function draw() {
       } else {
         fill(0);
       }
-      ellipse(mouseX, mouseY, brushWidth, brushHeight); // Draw a circle
+      //https://p5js.org/reference/
+      if (brushShape == "circle") {
+        ellipse(mouseX, mouseY, brushWidth, brushHeight); // Draw a circle
+      } else if (brushShape == "triangle") {
+        triangle(mouseX-brushWidth, mouseY, mouseX, mouseY-brushWidth, mouseX+brushWidth, mouseY);
+      } else if (brushShape == "rectangle") {
+        square(mouseX, mouseY, brushWidth);
+      }
   }
 }
 
@@ -85,16 +98,46 @@ function saveFunction() {
 }
 
 // Update the brush size dynamically based on input
-function updateBrush(r=0,g=0,b=0) {
+function updateBrush() {
+  //shape selector functions https://www.w3schools.com/howto/howto_css_shapes.asp
+  
   const size = document.getElementById('size').value; 
   //brushCircle updates the preview
   const brushCircle = document.querySelector('.brush-circle');
+  brushShape = document.getElementById("brushShape").value;
+  
+  //this is needed because otherwise the styles are being appended to each other, not applied from scratch
+  brushCircle.removeAttribute('style')
+  
+
+
+  if (brushShape == "circle") {
+  //create circle css
   brushCircle.style.width = `${Math.min(25 + (size / 2), 80)}px`;
   brushCircle.style.height = `${Math.min(25 + (size / 2), 80)}px`; 
   brushCircle.style.borderRadius = `100%`;
-  brushCircle.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 100)`;
-
-  //the actual brush can be updated by updating the global variables defined at the begin
+  brushCircle.style.backgroundColor = `rgba(0,0,0, 100)`;
+  
+  //the actual brush need to be updated by updating the global variables defined at the begin
   brushWidth = Math.min(25 + (size / 2), 80);
   brushHeight = Math.min(25 + (size / 2), 80);
+
+
+  } else if (brushShape == "triangle") {
+  //create triangle css
+  brushCircle.style.width = `0`
+  brushCircle.style.height = `0`
+  brushCircle.style.borderLeft = `${Math.min(25 + (size / 2), 80)}px solid transparent`;
+	brushCircle.style.borderRight = `${Math.min(25 + (size / 2), 80)}px solid transparent`;
+	brushCircle.style.borderBottom = `${Math.min(25 + (size / 2), 80)}px solid #000`;
+  brushWidth = Math.min(25 + (size / 2), 80);
+  
+  } else if (brushShape == "rectangle") {
+  //create rectangle css
+  //https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_shapes_square
+  brushCircle.style.width = `${Math.min(25 + (size / 2), 80)}px`
+  brushCircle.style.height = `${Math.min(25 + (size / 2), 80)}px`
+  brushCircle.style.backgroundColor = `rgba(0,0,0, 100)`;
+  brushWidth = Math.min(25 + (size / 2), 80);
+  }
 }
