@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brushmaking</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" href="brusstyle2.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <header class="header">
+          <button class="save-button" onclick="saveFunction()">Save</button>
+          <button class="eraser-button">Eraser</button>
+        </header>
+        <footer class="footer">
+          <div class="controls">
+            <h3>Customize Your Brush</h3>
+            <label for="brushShape">Brush Shape:</label>
+            <select id="brushShape" class="brush-shape">
+              <option value="circle">Circle</option>
+              <option value="square">Square</option>
+              <option value="rectangle">Rectangle</option>
+            </select>
+          </div>
+
+          <div class="brush-preview-wrapper">
+            <div class="brush-preview">
+              <h3>Brush Preview</h3>
+              <div class="brush-shape-preview"></div>
+            </div>
+          </div>
+        </footer>
+
+        <!-- Canvas Wrapper -->
+        <div class="canvas-wrapper">
+          <div class="p5-canvas-container">
+            <!-- The p5 canvas will be appended here dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
