@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brushmaking</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" href="brusstyle2.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Webcam feed will be positioned here by JavaScript -->
+        <div id="videoContainer"></div>
+
+        <div class="container">
+            <header class="header">
+                <button class="save-button">Save</button>
+            </header>
+            <main class="drawing-area">
+                <!-- Placeholder for p5 canvas -->
+                <div id="drawingPadContainer">
+                    <canvas id="drawingPad" class="drawing-pad"></canvas>
+                </div>
+            </main>
+            <footer class="footer">
+                <div class="controls">
+                    <h3>Customize Your Brush</h3>
+                    <label for="size">Size:</label> 
+                    <input type="range" id="size" min="0" max="100" value="50" oninput="updateBrush()">
+                    
+                    <label for="opacity">Opacity:</label> 
+                    <input type="range" id="opacity" min="0" max="100" value="50" oninput="updateBrush()">
+
+                    <label for="roundedness">Roundedness:</label>
+                    <input type="range" id="roundedness" min="0" max="100" value="0" oninput="updateBrush()">
+                    
+                    <button class="eraser-button">Eraser</button>
+                </div>
+
+                <div class="brush-preview-wrapper">
+                    <div class="brush-preview">
+                        <h3>Brush Preview</h3>
+                        <div class="brush-circle"></div> 
+                    </div>
+                </div>
+                <div id="snapContainer">
+                    <button id="snapButton">Snap</button>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
