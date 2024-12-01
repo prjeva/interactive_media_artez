@@ -57,7 +57,7 @@ document.querySelector(".reset-button").addEventListener("click", () => {
   const resetButton = document.querySelector(".reset-button");
   clear();
 });
-// Handle shape changes
+//Handle shape changes
 document.querySelector(".brush-shape").addEventListener("change", (event) => {
   brushShape = event.target.value; // Update brush shape
 });

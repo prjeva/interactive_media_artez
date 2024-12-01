@@ -5,44 +5,67 @@
     <title>Brushmaking</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" href="brusstyle2.css" />
+    <link rel="stylesheet" href="brushstyle2.css" />
   </head>
   <body>
 
     <div class="main_container">
-
-        <div class="toolbox">
-            <button class="save-button" onclick="saveFunction()">Save</button>
-            <button class="eraser-button">Brush</button>
-            <button class="reset-button">Reset Canvas</button>
-        </div>
+      <table>
+          <tr>
+            <td>
+              <div class="toolbox">
+                <button class="save-button" onclick="saveFunction()">Save</button>
+                <button class="eraser-button">Brush</button>
+                <button class="reset-button">Reset Canvas</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="brush_controls">
+                <h3>Customize Your Brush</h3>
+                <label for="size">Size:</label> 
+                <input type="range" id="size" min="0" max="100" value="50" oninput="updateBrush()">
+                <select id="brushShape" class="brush-shape" onchange="updateBrush()">
+                    <option value="circle">Circle</option>
+                    <option value="triangle">Triangle</option>
+                    <option value="rectangle">Rectangle</option>
+                </select>           
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="canvas-wrapper" style="float: left">
+                <div class="p5-canvas-container">
+                  <!-- The p5 canvas will be appended here dynamically -->
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="brush-preview-wrapper" style="float: left">
+                <div class="brush-preview">
+                    <h3>Brush Preview</h3>
+                    <div class="brush-circle"></div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="explanation-text">
+                <h4>How to create a photoshop brush texture from your downloaded png</h4>
+                <p>this is one line of text</p>
+                <p>This is another paragraph</p>
+                <ul>
+                <li>one</li>
+                <li>two</li>
+                <li>three</li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </table>
         
-        <div class="brush_controls">
-            <h3>Customize Your Brush</h3>
-            <label for="size">Size:</label> 
-            <input type="range" id="size" min="0" max="100" value="50" oninput="updateBrush()">
-            <select id="brushShape" class="brush-shape" onchange="updateBrush()">
-                <option value="circle">Circle</option>
-                <option value="triangle">Triangle</option>
-                <option value="rectangle">Rectangle</option>
-            </select>
-                    
-        </div>
-        <div class="canvas-wrapper" style="float: left">
-            <div class="p5-canvas-container">
-              <!-- The p5 canvas will be appended here dynamically -->
-            </div>
-        </div>
-        <div class="brush-preview-wrapper" style="float: left">
-            <div class="brush-preview">
-                <h3>Brush Preview</h3>
-                <div class="brush-circle"></div>
-            </div>
-        </div>
-        <div class="explanation-text">
-            <h4>How to create a photoshop brush texture from your downloaded png</h4>
-
-        </div>
+        
     </div>
     <script src="script.js"></script>
   </body>
